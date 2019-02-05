@@ -1,0 +1,40 @@
+sudo: false
+
+language: cpp
+os: linux
+
+env: 
+  matrix: 
+     - CONDA_PY=3.5
+     - CONDA_PY=3.6
+     - CONDA_PY=3.7
+
+dist: trusty
+
+install:
+  - sudo apt-get update
+  - ldd --version
+  - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
+  - bash miniconda.sh -b -p $HOME/miniconda
+  - export PATH="$HOME/miniconda/bin:$PATH"
+  - rm -f miniconda.sh
+  - hash -r
+  - conda config --set always_yes yes --set changeps1 no
+  - conda config --add channels conda-forge
+  - conda config --add channels slsdetectorgroup
+  - conda update conda
+  - conda update --all
+  - conda install conda-build anaconda-client
+  - conda info -a
+
+  - conda create -q -n test-environment python=$CONDA_PY
+  - source activate test-environment
+
+  - conda-build recipe -c conda-forge/label/gcc7
+
+  - conda install --use-local example
+  - conda install pytest
+  - conda install numpy
+
+script:
+ - python -m pytest tests

@@ -4,7 +4,7 @@ import sys
 import platform
 import subprocess
 
-from setuptools import setup, Extension
+from setuptools import setup, Extension, find_packages
 from setuptools.command.build_ext import build_ext
 from distutils.version import LooseVersion
 
@@ -57,13 +57,14 @@ class CMakeBuild(build_ext):
         subprocess.check_call(['cmake', '--build', '.'] + build_args, cwd=self.build_temp)
 
 setup(
-    name='cmake_example',
-    version='0.0.1',
-    author='Dean Moldovan',
-    author_email='dean0x7d@gmail.com',
+    name='example',
+    version='1.0',
+    author='Erik Frojdh',
+    author_email='erik.frojdh@gmail.com',
     description='A test project using pybind11 and CMake',
     long_description='',
-    ext_modules=[CMakeExtension('cmake_example')],
+    packages=find_packages(exclude=['contrib', 'docs', 'tests']),
+    ext_modules=[CMakeExtension('CompiledModule')],
     cmdclass=dict(build_ext=CMakeBuild),
     zip_safe=False,
 )

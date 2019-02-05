@@ -38,12 +38,12 @@ class Detector
     int exposure_time_ = 0;
 };
 
-PYBIND11_MODULE(cmake_example, m)
+PYBIND11_MODULE(CompiledModule, m)
 {
     m.doc() = R"pbdoc(
         Pybind11 example plugin
         -----------------------
-        .. currentmodule:: cmake_example
+        .. currentmodule:: CompiledModule
         .. autosummary::
            :toctree: _generate
            add

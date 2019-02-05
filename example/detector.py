@@ -1,5 +1,5 @@
 
-from cmake_example import Detector
+from CompiledModule import Detector
 
 class PyDetector(Detector):
     def __init__(self):
